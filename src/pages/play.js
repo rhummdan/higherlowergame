@@ -1,11 +1,10 @@
-import {RandomVideoComponent} from '../components/randomVid'
-
+import { RandomVideo } from "../components/randomVideo";
 export const Play = () => {
+    
     
     return (
         <div>
-            <RandomVideoComponent />
-            <RandomVideoComponent />
+            
         </div>
     );
     
