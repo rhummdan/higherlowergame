@@ -5,7 +5,7 @@ export const YouTubeVideo = ({ videoId }) => {
   
     return (
       <div>
-        <h1>My YouTube Video</h1>
+        <h1>Video 1</h1>
         <iframe
           width="640"
           height="390"
