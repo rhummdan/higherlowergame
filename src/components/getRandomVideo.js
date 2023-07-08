@@ -25,15 +25,11 @@ export const RandomVideo = () => {
         }
     }, []);
 
-    let num = parseInt(videoViews, 10);
+
     
     return (
-        <div>
-            <YouTubeVideo videoId = {videoId}/>
-            <h1>{videoTitle}</h1>
-            {videoViews > 100 ?  <p>{videoViews}</p> : <p>not</p>}
-           
-            
+        <div className='video1'>
+            <YouTubeVideo videoId = {videoId} title = {videoTitle} views = {videoViews}/>         
         </div>
     );
 }

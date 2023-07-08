@@ -71,3 +71,12 @@
   height:50px;
   
 }
+
+.video1 {
+  display: flex;
+  margin-top: 100px;
+  margin-left: 100px;
+  
+  /*justify-content: flex-start;*/
+}
+
