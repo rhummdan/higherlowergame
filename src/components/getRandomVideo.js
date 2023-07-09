@@ -5,7 +5,6 @@ import axios from "axios";
 
 
 export const RandomVideo = ({setVideoId, setVideoTitle, setVideoViews}) => {
-
     useEffect(() => {
         try {
             axios.get("http://randomvidapi.com/videodetails").then((res) => {
@@ -17,12 +16,4 @@ export const RandomVideo = ({setVideoId, setVideoTitle, setVideoViews}) => {
             console.log(error)
         }
     }, []);
-
-
-    
-    // return (
-    //     <div className='video1'>
-    //         <YouTubeVideo videoId = {videoId} title = {videoTitle} views = {videoViews}/>         
-    //     </div>
-    // );
 }
