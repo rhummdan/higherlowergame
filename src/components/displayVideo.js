@@ -16,7 +16,8 @@ export const YouTubeVideo = ({ videoId, title, views }) => {
             allowFullScreen
           />
           <h3>{title}</h3>
-          <p>Views: {views}</p>
+          {views && <p>Views: {views}</p>}
+          
         </div>
       </>
     );

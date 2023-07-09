@@ -4,14 +4,7 @@ import axios from "axios";
 
 
 
-export const RandomVideo = () => {
-
-    // const [videoViews, setVideoViews] = useState(0);
-    const [videoTitle, setVideoTitle] = useState("");
-    const [videoViews, setVideoViews] = useState();
-    const [videoId, setVideoId] = useState();
-    
-    
+export const RandomVideo = ({setVideoId, setVideoTitle, setVideoViews}) => {
 
     useEffect(() => {
         try {
@@ -27,9 +20,9 @@ export const RandomVideo = () => {
 
 
     
-    return (
-        <div className='video1'>
-            <YouTubeVideo videoId = {videoId} title = {videoTitle} views = {videoViews}/>         
-        </div>
-    );
+    // return (
+    //     <div className='video1'>
+    //         <YouTubeVideo videoId = {videoId} title = {videoTitle} views = {videoViews}/>         
+    //     </div>
+    // );
 }
