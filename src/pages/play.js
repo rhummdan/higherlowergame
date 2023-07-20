@@ -2,6 +2,7 @@ import { bool, boolean } from "yup";
 import { RandomVideo } from "../components/getRandomVideo";
 import { YouTubeVideo } from "../components/displayVideo";
 import { useState } from "react";
+import {correctAnswer} from "../components/functionalities";
 
 
 
@@ -20,22 +21,51 @@ export const Play = () => {
     //state for the user's score
     const [score, setScore] = useState(0);
 
+    const checkHigher = (views1, views2) => {
+        if(views2 > views1) {
+            setScore(score + 1);
+            setNewRound(false);
+        } else {
+            setScore(0);
+            setNewRound(false);
+        }
+    }
+
     
+
+    
+
+    //if newRound is true, generate new vids for vid1 and vid2. If it isn't true, meaning the user answered correctly,
+    //set vid1 to vid2 and generate a new vid for vid2.
     return (
         <>
-            <div>   
-                <RandomVideo setVideoId={setVideo1Id} setVideoTitle={setVideo1Title} setVideoViews={setVideo1Views} />
-            </div>
-            <div>
-                {newRound && 
+            <div> {newRound ? (
+                <>
+                    <RandomVideo setVideoId={setVideo1Id} setVideoTitle={setVideo1Title} setVideoViews={setVideo1Views} />
+                </>
+            ) : (
                     <>
-                        <RandomVideo setVideoId={setVideo2Id} setVideoTitle={setVideo2Title} setVideoViews={setVideo2Views} />
+                        {/* call the correctAnswer component from the other page */}
                     </>
-                }
+                )
+            }
+                
+            
+              
             </div>
+
+            <div>
+                <RandomVideo setVideoId={setVideo2Id} setVideoTitle={setVideo2Title} setVideoViews={setVideo2Views} />
+            </div>
+
             <div className="play">
                 <YouTubeVideo videoId = {video1Id} title = {video1Title} views = {video1Views}/>
-                <YouTubeVideo videoId = {video2Id} title = {video2Title} />
+                <div>
+                    <YouTubeVideo videoId = {video2Id} title = {video2Title} />
+                    <button onClick={() => checkHigher(video1Views,video2Views)}>Higher</button>
+                    <button>Lower</button>
+                </div>
+                
             </div>
             <div className="score">
                 <h1>Score: {score}</h1>
