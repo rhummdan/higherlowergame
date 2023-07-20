@@ -2,7 +2,7 @@ import { bool, boolean } from "yup";
 import { RandomVideo } from "../components/getRandomVideo";
 import { YouTubeVideo } from "../components/displayVideo";
 import { useState } from "react";
-import {correctAnswer} from "../components/functionalities";
+import {CorrectAnswer} from "../components/functionalities";
 
 
 
@@ -18,8 +18,11 @@ export const Play = () => {
     const [video2Id, setVideo2Id] = useState();
     //variable that determines if we should restart the game
     const [newRound, setNewRound] = useState(true);
+
+    const [buttonClicked, setButtonClicked] = useState(true);
     //state for the user's score
     const [score, setScore] = useState(0);
+    
 
     const checkHigher = (views1, views2) => {
         if(views2 > views1) {
@@ -27,10 +30,24 @@ export const Play = () => {
             setNewRound(false);
         } else {
             setScore(0);
-            setNewRound(false);
+            setNewRound(true);
         }
     }
 
+    const checkLower = (views1, views2) => {
+        if(views2 < views1) {
+            setScore(score + 1);
+            setNewRound(false);
+        } else {
+            setScore(0);
+            setNewRound(true);
+        }
+    }
+
+    const handleButtonClick = () => {
+        setButtonClicked(!buttonClicked);
+    };
+    
     
 
     
@@ -39,31 +56,34 @@ export const Play = () => {
     //set vid1 to vid2 and generate a new vid for vid2.
     return (
         <>
-            <div> {newRound ? (
-                <>
-                    <RandomVideo setVideoId={setVideo1Id} setVideoTitle={setVideo1Title} setVideoViews={setVideo1Views} />
-                </>
-            ) : (
+            {/* this div covers video1 */}
+            <div> 
+                {newRound ? (
                     <>
-                        {/* call the correctAnswer component from the other page */}
+                        <RandomVideo setVideoId={setVideo1Id} setVideoTitle={setVideo1Title} setVideoViews={setVideo1Views} />
                     </>
-                )
-            }
-                
-            
-              
+                ) : (
+                    <>
+                        <CorrectAnswer set1Id={setVideo1Id} set1Title={setVideo1Title} set1Views={setVideo1Views}
+                        id2={video2Id} title2={video2Title} views2={video2Views}/>
+                    </>
+                    )
+                }
             </div>
 
             <div>
-                <RandomVideo setVideoId={setVideo2Id} setVideoTitle={setVideo2Title} setVideoViews={setVideo2Views} />
+                {/* We need the second video to update everytime */}
+                <>
+                    <RandomVideo setVideoId={setVideo2Id} setVideoTitle={setVideo2Title} setVideoViews={setVideo2Views}/>
+                </> 
             </div>
 
             <div className="play">
                 <YouTubeVideo videoId = {video1Id} title = {video1Title} views = {video1Views}/>
                 <div>
                     <YouTubeVideo videoId = {video2Id} title = {video2Title} />
-                    <button onClick={() => checkHigher(video1Views,video2Views)}>Higher</button>
-                    <button>Lower</button>
+                    <button onClick={() => {checkHigher(video1Views,video2Views); handleButtonClick()}}>Higher</button>
+                    <button onClick={() => {checkLower(video1Views, video2Views); handleButtonClick()}}>Lower</button>
                 </div>
                 
             </div>
