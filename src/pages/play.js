@@ -23,31 +23,34 @@ export const Play = () => {
     //state for the user's score
     const [score, setScore] = useState(0);
     
+    const [firstRound, setFirstRound] = useState(true);
+
+    const handleButtonClick = () => {
+        // Toggle the state when a button is clicked
+        <RandomVideo setVideoId={setVideo2Id} setVideoTitle={setVideo2Title} setVideoViews={setVideo2Views}/>
+        setFirstRound(false);
+    };
+
+
 
     const checkHigher = (views1, views2) => {
         if(views2 > views1) {
             setScore(score + 1);
-            setNewRound(false);
         } else {
             setScore(0);
-            setNewRound(true);
+            setFirstRound(true);
         }
     }
 
     const checkLower = (views1, views2) => {
         if(views2 < views1) {
             setScore(score + 1);
-            setNewRound(false);
         } else {
             setScore(0);
-            setNewRound(true);
+            setFirstRound(true);
         }
     }
 
-    const handleButtonClick = () => {
-        setButtonClicked(!buttonClicked);
-    };
-    
     
 
     
@@ -73,9 +76,14 @@ export const Play = () => {
 
             <div>
                 {/* We need the second video to update everytime */}
+
+                
                 <>
                     <RandomVideo setVideoId={setVideo2Id} setVideoTitle={setVideo2Title} setVideoViews={setVideo2Views}/>
                 </> 
+                    
+                
+                
             </div>
 
             <div className="play">
