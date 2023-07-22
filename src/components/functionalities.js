@@ -5,7 +5,7 @@
 
 // {<CorrectAnswer set1Id={setVideo1Id} set1Title={setVideo1Title} set1Views={setVideo1Views}
 // id2={video2Id} title2={video2Title} views2={video2Views}/>}
-export const CorrectAnswer = (props) => {
+export const AdjustVid1 = (props) => {
     const vid2Id=props.id2;
     const vid2Title=props.title2;
     const vid2Views=props.views2;

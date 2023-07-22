@@ -2,7 +2,7 @@ import { bool, boolean } from "yup";
 import { RandomVideo } from "../components/getRandomVideo";
 import { YouTubeVideo } from "../components/displayVideo";
 import { useState } from "react";
-import {CorrectAnswer} from "../components/functionalities";
+import {AdjustVid1} from "../components/functionalities";
 
 
 
@@ -16,23 +16,22 @@ export const Play = () => {
     const [video2Title, setVideo2Title] = useState("");
     const [video2Views, setVideo2Views] = useState();
     const [video2Id, setVideo2Id] = useState();
-    //variable that determines if we should restart the game
-    const [newRound, setNewRound] = useState(true);
 
-    const [buttonClicked, setButtonClicked] = useState(true);
     //state for the user's score
     const [score, setScore] = useState(0);
     
+    const [correctAnswer, setCorrectAnswer] = useState(false);
 
     //This variable will only be true to start the program off
     const [firstRound, setFirstRound] = useState(true);
-    const [changeRound, setChangeRound] = useState(false);
 
     const handleButtonClick = () => {
-        // Toggle the state when a button is clicked
-
-        //Every time button is clicked, a new video will be set for video2
-        setChangeRound(!changeRound);
+        //When a button is clicked, this state will become false indicating that we're no longer on the first round
+        <RandomVideo 
+            setVideoId={setVideo2Id} 
+            setVideoTitle={setVideo2Title} 
+            setVideoViews={setVideo2Views}
+        />
         setFirstRound(false);
     };
 
@@ -41,10 +40,10 @@ export const Play = () => {
     const checkHigher = (views1, views2) => {
         if(views2 > views1) {
             setScore(score + 1);
-            <CorrectAnswer set1Id={setVideo1Id} set1Title={setVideo1Title} set1Views={setVideo1Views}
-                id2={video2Id} title2={video2Title} views2={video2Views}/>
+            setCorrectAnswer(true);
         } else {
             setScore(0);
+            setCorrectAnswer(false);
             setFirstRound(true);
         }
     }
@@ -52,10 +51,10 @@ export const Play = () => {
     const checkLower = (views1, views2) => {
         if(views2 < views1) {
             setScore(score + 1);
-            // <CorrectAnswer set1Id={setVideo1Id} set1Title={setVideo1Title} set1Views={setVideo1Views}
-            //     id2={video2Id} title2={video2Title} views2={video2Views}/>
+            setCorrectAnswer(true);
         } else {
             setScore(0);
+            setCorrectAnswer(false);
             setFirstRound(true);
         }
     }
@@ -76,45 +75,23 @@ export const Play = () => {
                         setVideoTitle={setVideo1Title}
                         setVideoViews={setVideo1Views}
                     />
-                ) : changeRound ? (
-                    <CorrectAnswer
-                        set1Id={setVideo1Id}
-                        set1Title={setVideo1Title}
-                        set1Views={setVideo1Views}
-                        id2={video2Id}
-                        title2={video2Title}
-                        views2={video2Views}
-                    />
+                ) : correctAnswer ? (
+                    <AdjustVid1 set1Id={setVideo1Id} set1Title={setVideo1Title} set1Views={setVideo1Views}
+                        id2={video2Id} title2={video2Title} views2={video2Views}/>
                 ) : (
-                    <CorrectAnswer
-                        set1Id={setVideo1Id}
-                        set1Title={setVideo1Title}
-                        set1Views={setVideo1Views}
-                        id2={video2Id}
-                        title2={video2Title}
-                        views2={video2Views}
-                    />
+                    <AdjustVid1 set1Id={setVideo1Id} set1Title={setVideo1Title} set1Views={setVideo1Views}
+                        id2={video2Id} title2={video2Title} views2={video2Views}/>
                 )}
             </div>
 
             <div>
                 {/* We need the second video to update everytime */}
-                {changeRound ? (
+                
                     <RandomVideo 
                         setVideoId={setVideo2Id} 
                         setVideoTitle={setVideo2Title} 
                         setVideoViews={setVideo2Views}
                     />
-                ) : (
-                    <RandomVideo 
-                        setVideoId={setVideo2Id} 
-                        setVideoTitle={setVideo2Title} 
-                        setVideoViews={setVideo2Views}
-                    />
-                )}
-                <>
-                    <RandomVideo setVideoId={setVideo2Id} setVideoTitle={setVideo2Title} setVideoViews={setVideo2Views}/>
-                </>    
             </div>
 
             <div className="play">
