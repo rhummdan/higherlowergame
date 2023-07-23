@@ -1,8 +1,8 @@
 import { bool, boolean } from "yup";
 import { RandomVideo } from "../components/getRandomVideo";
 import { YouTubeVideo } from "../components/displayVideo";
-import { useState } from "react";
-import {AdjustVid1} from "../components/functionalities";
+import { useEffect, useState } from "react";
+import Axios from "axios";
 
 
 
@@ -27,35 +27,43 @@ export const Play = () => {
 
     const handleButtonClick = () => {
         //When a button is clicked, this state will become false indicating that we're no longer on the first round
-        <RandomVideo 
-            setVideoId={setVideo2Id} 
-            setVideoTitle={setVideo2Title} 
-            setVideoViews={setVideo2Views}
-        />
+        if(checkHigher || checkLower) {
+            setVideo1Id(video2Id);
+            setVideo1Title(video2Title);
+            setVideo1Views(video2Views);
+        }
+        Axios.get("http://randomvidapi.com/videodetails").then((res) => {
+            setVideo2Id(res.data["video_id"]);
+            setVideo2Title(res.data["title"]);
+            setVideo2Views(res.data["views"]);
+        });
         setFirstRound(false);
     };
+    useEffect(() => {
+        handleButtonClick();
+    }, []);
 
 
 
     const checkHigher = (views1, views2) => {
         if(views2 > views1) {
             setScore(score + 1);
-            setCorrectAnswer(true);
+            return true;
         } else {
             setScore(0);
-            setCorrectAnswer(false);
             setFirstRound(true);
+            return false
         }
     }
 
     const checkLower = (views1, views2) => {
         if(views2 < views1) {
             setScore(score + 1);
-            setCorrectAnswer(true);
+            return true;
         } else {
             setScore(0);
-            setCorrectAnswer(false);
             setFirstRound(true);
+            return false;
         }
     }
 
@@ -69,24 +77,17 @@ export const Play = () => {
         <>
             {/* this div covers video1 */}
             <div>
-                {firstRound ? (
+                {firstRound && (
                     <RandomVideo
                         setVideoId={setVideo1Id}
                         setVideoTitle={setVideo1Title}
                         setVideoViews={setVideo1Views}
                     />
-                ) : correctAnswer ? (
-                    <AdjustVid1 set1Id={setVideo1Id} set1Title={setVideo1Title} set1Views={setVideo1Views}
-                        id2={video2Id} title2={video2Title} views2={video2Views}/>
-                ) : (
-                    <AdjustVid1 set1Id={setVideo1Id} set1Title={setVideo1Title} set1Views={setVideo1Views}
-                        id2={video2Id} title2={video2Title} views2={video2Views}/>
                 )}
             </div>
 
             <div>
                 {/* We need the second video to update everytime */}
-                
                     <RandomVideo 
                         setVideoId={setVideo2Id} 
                         setVideoTitle={setVideo2Title} 
