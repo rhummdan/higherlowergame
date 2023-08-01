@@ -3,6 +3,7 @@ import { RandomVideo } from "../components/getRandomVideo";
 import { YouTubeVideo } from "../components/displayVideo";
 import { useEffect, useState } from "react";
 import Axios from "axios";
+import {AddScore} from "../components/addScore";
 
 
 
@@ -31,13 +32,14 @@ export const Play = () => {
             setVideo1Id(video2Id);
             setVideo1Title(video2Title);
             setVideo1Views(video2Views);
+            setFirstRound(false);
         }
         Axios.get("http://randomvidapi.com/videodetails").then((res) => {
             setVideo2Id(res.data["video_id"]);
             setVideo2Title(res.data["title"]);
             setVideo2Views(res.data["views"]);
         });
-        setFirstRound(false);
+        
     };
     useEffect(() => {
         handleButtonClick();
@@ -50,8 +52,8 @@ export const Play = () => {
             setScore(score + 1);
             return true;
         } else {
+            <AddScore userScore={score}/>
             setScore(0);
-            setFirstRound(true);
             return false
         }
     }
@@ -61,8 +63,8 @@ export const Play = () => {
             setScore(score + 1);
             return true;
         } else {
+            <AddScore userScore={score}/>
             setScore(0);
-            setFirstRound(true);
             return false;
         }
     }
@@ -99,8 +101,8 @@ export const Play = () => {
                 <YouTubeVideo videoId = {video1Id} title = {video1Title} views = {video1Views}/>
                 <div>
                     <YouTubeVideo videoId = {video2Id} title = {video2Title} />
-                    <button onClick={() => {handleButtonClick(); checkHigher(video1Views,video2Views)}}>Higher</button>
-                    <button onClick={() => {handleButtonClick(); checkLower(video1Views, video2Views)}}>Lower</button>
+                    <button onClick={() => {checkHigher(video1Views,video2Views); handleButtonClick()}}>Higher</button>
+                    <button onClick={() => {checkLower(video1Views, video2Views); handleButtonClick()}}>Lower</button>
                 </div>
                 
             </div>
