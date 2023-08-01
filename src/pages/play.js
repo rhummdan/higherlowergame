@@ -3,11 +3,18 @@ import { RandomVideo } from "../components/getRandomVideo";
 import { YouTubeVideo } from "../components/displayVideo";
 import { useEffect, useState } from "react";
 import Axios from "axios";
-import {AddScore} from "../components/addScore";
+import { addDoc, collection } from 'firebase/firestore';
+import {auth, db} from '../config/firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 
 
 export const Play = () => {
+
+    //user data thats logged in
+    const [user] = useAuthState(auth);
+    //getting scores collection from db
+    const scoresRef = collection(db, "scores");
     
     //data for the first video
     const [video1Title, setVideo1Title] = useState("");
@@ -25,6 +32,13 @@ export const Play = () => {
 
     //This variable will only be true to start the program off
     const [firstRound, setFirstRound] = useState(true);
+
+    const addScore = async () => {
+        await addDoc(scoresRef, {
+            username: user?.displayName,
+            score: score,
+         })
+    }
 
     const handleButtonClick = () => {
         //When a button is clicked, this state will become false indicating that we're no longer on the first round
@@ -52,7 +66,7 @@ export const Play = () => {
             setScore(score + 1);
             return true;
         } else {
-            <AddScore userScore={score}/>
+            addScore();
             setScore(0);
             return false
         }
@@ -63,7 +77,7 @@ export const Play = () => {
             setScore(score + 1);
             return true;
         } else {
-            <AddScore userScore={score}/>
+            addScore();
             setScore(0);
             return false;
         }
