@@ -87,7 +87,7 @@ export const Play = () => {
             </div>
 
             <div>
-                {/* We need the second video to update everytime */}
+                {/* This ensures that a second video is displayed when the game starts */}
                     <RandomVideo 
                         setVideoId={setVideo2Id} 
                         setVideoTitle={setVideo2Title} 
