@@ -66,7 +66,9 @@ export const Play = () => {
             setScore(score + 1);
             return true;
         } else {
-            addScore();
+            if(user) {
+                addScore();
+            }
             setScore(0);
             return false
         }
@@ -77,7 +79,9 @@ export const Play = () => {
             setScore(score + 1);
             return true;
         } else {
-            addScore();
+            if(user) {
+                addScore();
+            }
             setScore(0);
             return false;
         }
