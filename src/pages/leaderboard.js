@@ -1,5 +1,5 @@
 import { getDocs, collection } from "firebase/firestore";
-import { db } from "../../config/firebase";
+import { db } from "../config/firebase";
 import React, { useState, useEffect } from "react";
 
 
@@ -7,6 +7,7 @@ import React, { useState, useEffect } from "react";
 
 export const Leaderboard = () => {
 
+    //storing data from "scores" collection in firestore
     const scoresRef = collection(db, "scores");
     const [scoresList, setScoresList] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -16,7 +17,7 @@ export const Leaderboard = () => {
         try {
             const data = await getDocs(scoresRef);
             const docsArray = data.docs.map((doc) => doc.data());
-            const sortedList = docsArray.sort((a, b) => b.score - a.score);
+            const sortedList = docsArray.sort((a, b) => b.score - a.score); //sorting list so we could display scores in order
             setScoresList(sortedList);
             setLoading(false);
         } catch (error) {

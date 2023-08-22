@@ -1,5 +1,6 @@
 import React from 'react';
 
+//this component takes in the video id and displays it
 export const YouTubeVideo = ({ videoId, title, views }) => {
     const iframeSrc = `https://www.youtube.com/embed/${videoId}`;
   

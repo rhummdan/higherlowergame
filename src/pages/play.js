@@ -28,11 +28,11 @@ export const Play = () => {
     //state for the user's score
     const [score, setScore] = useState(0);
     
-    const [correctAnswer, setCorrectAnswer] = useState(false);
 
     //This variable will only be true to start the program off
     const [firstRound, setFirstRound] = useState(true);
 
+    //adds user score to db. Function only called if user is logged in
     const addScore = async () => {
         await addDoc(scoresRef, {
             username: user?.displayName,
@@ -41,7 +41,6 @@ export const Play = () => {
     }
 
     const handleButtonClick = () => {
-        //When a button is clicked, this state will become false indicating that we're no longer on the first round
         if(checkHigher || checkLower) {
             setVideo1Id(video2Id);
             setVideo1Title(video2Title);
@@ -60,7 +59,7 @@ export const Play = () => {
     }, []);
 
 
-
+    //function called when user selects the higher option.
     const checkHigher = (views1, views2) => {
         if(views2 > views1) {
             setScore(score + 1);
@@ -74,6 +73,7 @@ export const Play = () => {
         }
     }
 
+    //function called when user selects the lower option
     const checkLower = (views1, views2) => {
         if(views2 < views1) {
             setScore(score + 1);
@@ -91,11 +91,9 @@ export const Play = () => {
 
     
 
-    //if newRound is true, generate new vids for vid1 and vid2. If it isn't true, meaning the user answered correctly,
-    //set vid1 to vid2 and generate a new vid for vid2.
+    
     return (
         <>
-            {/* this div covers video1 */}
             <div>
                 {firstRound && (
                     <RandomVideo

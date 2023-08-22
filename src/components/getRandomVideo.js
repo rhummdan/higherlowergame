@@ -3,7 +3,7 @@ import {YouTubeVideo} from './displayVideo';
 import axios from "axios";
 
 
-
+//this function makes the api call and fetches data
 export const RandomVideo = ({setVideoId, setVideoTitle, setVideoViews}) => {
     useEffect(() => {
         try {

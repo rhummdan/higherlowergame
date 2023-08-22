@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import { Play } from './pages/play';
-import { Leaderboard } from './pages/leaderboard/leaderboard';
+import { Leaderboard } from './pages/leaderboard';
 import { Navbar } from './components/navbar';
 
 
